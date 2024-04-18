@@ -1,1 +1,3 @@
-console.log('hello world');
+import gameLaunch from './javascript/gameLaunch.js';
+
+gameLaunch();
