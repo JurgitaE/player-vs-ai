@@ -8,13 +8,23 @@ class Game {
         this.height = this.canvas.height;
 
         this.input = new InputHandler(this);
+
+        this.resize(window.innerWidth, window.innerHeight);
     }
 
     resize(width, height) {
         this.canvas.width = Math.floor(width);
-        this.width = this.canvas.width;
         this.canvas.height = Math.floor(height);
+        this.width = this.canvas.width;
         this.height = this.canvas.height;
+        this.ctx.fillStyle = 'blue';
+
+        this.render();
+    }
+
+    render() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+        this.ctx.fillRect(this.x, 100, 100, 150);
     }
 }
 
