@@ -24,7 +24,7 @@ class Game {
 
     render() {
         this.ctx.clearRect(0, 0, this.width, this.height);
-        this.ctx.fillRect(this.x, 100, 100, 150);
+        this.ctx.fillRect(200, 100, 100, 150);
     }
 }
 
