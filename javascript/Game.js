@@ -1,4 +1,5 @@
 import InputHandler from './InputHandler.js';
+import Player from './Player.js';
 
 class Game {
     constructor(canvas, context) {
@@ -8,6 +9,7 @@ class Game {
         this.height = this.canvas.height;
 
         this.input = new InputHandler(this);
+        this.player = new Player(this, 0, 0, 1, 0);
 
         this.resize(window.innerWidth, window.innerHeight);
     }
@@ -23,8 +25,8 @@ class Game {
     }
 
     render() {
-        this.ctx.clearRect(0, 0, this.width, this.height);
-        this.ctx.fillRect(200, 100, 100, 150);
+        // this.player.update();
+        // this.player.draw();
     }
 }
 
