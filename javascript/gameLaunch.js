@@ -8,5 +8,13 @@ export default function gameLaunch() {
         canvas.height = window.innerHeight;
 
         const game = new Game(canvas, ctx);
+
+        function animate() {
+            ctx.clearRect(0, 0, game.width, game.height);
+            game.render();
+
+            requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
     });
 }
