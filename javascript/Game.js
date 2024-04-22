@@ -8,12 +8,16 @@ class Game {
         this.width;
         this.height;
 
-        this.input = new InputHandler(this);
-        this.player = new Player(this, 0, 0, 1, 0);
-
         this.cellSize = 50;
         this.columns;
         this.rows;
+
+        this.eventTimer = 0;
+        this.eventInterval = 200;
+        this.eventUpdate = false;
+
+        this.input = new InputHandler(this);
+        this.player = new Player(this, 0, 0, 1, 0, 'magenta');
 
         this.resize(window.innerWidth, window.innerHeight);
     }
@@ -23,12 +27,11 @@ class Game {
         this.canvas.height = height - height / this.cellSize;
         this.width = this.canvas.width;
         this.height = this.canvas.height;
-        this.ctx.fillStyle = 'blue';
 
         this.columns = Math.floor(this.width / this.cellSize);
         this.rows = Math.floor(this.height / this.cellSize);
 
-        this.render();
+        // this.render();
     }
 
     drawGrid() {
@@ -39,10 +42,23 @@ class Game {
         }
     }
 
-    render() {
-        this.drawGrid();
-        // this.player.update();
-        // this.player.draw();
+    handlePeriodicEvents(deltaTime) {
+        if (this.eventTimer < this.eventInterval) {
+            this.eventTimer += deltaTime;
+            this.eventUpdate = false;
+        } else {
+            this.eventTimer = 0;
+            this.eventUpdate = true;
+        }
+    }
+    render(deltaTime) {
+        this.handlePeriodicEvents(deltaTime);
+        if (this.eventUpdate) {
+            this.ctx.clearRect(0, 0, this.width, this.height);
+            this.drawGrid();
+            this.player.draw();
+            this.player.update();
+        }
     }
 }
 
