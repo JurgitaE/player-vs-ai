@@ -9,9 +9,13 @@ export default function gameLaunch() {
 
         const game = new Game(canvas, ctx);
 
-        function animate() {
-            ctx.clearRect(0, 0, game.width, game.height);
-            game.render();
+        let lastTime = 0;
+        function animate(timeStamp) {
+            const deltaTime = timeStamp - lastTime;
+            lastTime = timeStamp;
+            // console.log(deltaTime);
+
+            game.render(deltaTime);
 
             requestAnimationFrame(animate);
         }
