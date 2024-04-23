@@ -1,5 +1,5 @@
 import InputHandler from './InputHandler.js';
-import Player from './Player.js';
+import { Keyboard1 } from './Player.js';
 
 class Game {
     constructor(canvas, context) {
@@ -13,11 +13,11 @@ class Game {
         this.rows;
 
         this.eventTimer = 0;
-        this.eventInterval = 200;
+        this.eventInterval = 400;
         this.eventUpdate = false;
 
         this.input = new InputHandler(this);
-        this.player = new Player(this, 0, 0, 1, 0, 'magenta');
+        this.player = new Keyboard1(this, 5, 0, 0, 1, 'magenta');
 
         this.resize(window.innerWidth, window.innerHeight);
     }
