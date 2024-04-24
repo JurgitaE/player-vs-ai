@@ -50,7 +50,7 @@ class Player {
     }
 }
 
-class Keyboard1 extends Player {
+class ArrowKeyboard extends Player {
     constructor(game, x, y, speedX, speedY, color) {
         super(game, x, y, speedX, speedY, color);
         window.addEventListener('keydown', e => {
@@ -61,4 +61,15 @@ class Keyboard1 extends Player {
         });
     }
 }
-export { Keyboard1 };
+class WsadKeyboard extends Player {
+    constructor(game, x, y, speedX, speedY, color) {
+        super(game, x, y, speedX, speedY, color);
+        window.addEventListener('keydown', e => {
+            if (e.key.toLowerCase() === 'd') this.turnRight();
+            if (e.key.toLowerCase() === 'a') this.turnLeft();
+            if (e.key.toLowerCase() === 'w') this.turnUp();
+            if (e.key.toLowerCase() === 's') this.turnDown();
+        });
+    }
+}
+export { ArrowKeyboard, WsadKeyboard };

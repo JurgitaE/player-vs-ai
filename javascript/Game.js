@@ -1,5 +1,5 @@
 import InputHandler from './InputHandler.js';
-import { Keyboard1 } from './Player.js';
+import { ArrowKeyboard, WsadKeyboard } from './Player.js';
 
 class Game {
     constructor(canvas, context) {
@@ -17,7 +17,9 @@ class Game {
         this.eventUpdate = false;
 
         this.input = new InputHandler(this);
-        this.player = new Keyboard1(this, 5, 0, 0, 1, 'magenta');
+        this.player1;
+        this.player2;
+        this.playerObjects;
 
         this.resize(window.innerWidth, window.innerHeight);
     }
@@ -30,6 +32,10 @@ class Game {
 
         this.columns = Math.floor(this.width / this.cellSize);
         this.rows = Math.floor(this.height / this.cellSize);
+
+        this.player1 = new ArrowKeyboard(this, 0, 0, 1, 0, 'magenta');
+        this.player2 = new WsadKeyboard(this, this.columns - 1, 0, 0, 1, 'orange');
+        this.playerObjects = [this.player1, this.player2];
 
         // this.render();
     }
@@ -56,8 +62,11 @@ class Game {
         if (this.eventUpdate) {
             this.ctx.clearRect(0, 0, this.width, this.height);
             this.drawGrid();
-            this.player.draw();
-            this.player.update();
+
+            this.playerObjects.forEach(player => {
+                player.draw();
+                player.update();
+            });
         }
     }
 }
