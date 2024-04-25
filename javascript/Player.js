@@ -1,20 +1,23 @@
 class Player {
-    constructor(game, x, y, speedX, speedY, color) {
+    constructor(game, x, y, speedX, speedY, color, name) {
         this.game = game;
         this.x = x;
         this.y = y;
         this.speedX = speedX;
         this.speedY = speedY;
+        this.name = name;
         this.color = color;
         this.width = this.game.cellSize;
         this.height = this.game.cellSize;
         this.moving = true;
         this.score = 0;
 
-        this.length = 2;
+        this.length = 3;
         this.segments = [];
+        this.readyToTurn = true;
     }
     update() {
+        this.readyToTurn = true;
         if (this.game.checkCollision(this, this.game.food)) {
             this.game.food.reset();
             this.score++;
@@ -48,30 +51,42 @@ class Player {
         });
     }
     turnUp() {
-        this.speedY = -1;
-        this.speedX = 0;
-        this.moving = true;
+        if (this.speedY === 0 && this.readyToTurn) {
+            this.speedY = -1;
+            this.speedX = 0;
+            this.moving = true;
+            this.readyToTurn = false;
+        }
     }
     turnDown() {
-        this.speedY = 1;
-        this.speedX = 0;
-        this.moving = true;
+        if (this.speedY === 0 && this.readyToTurn) {
+            this.speedY = 1;
+            this.speedX = 0;
+            this.moving = true;
+            this.readyToTurn = false;
+        }
     }
     turnLeft() {
-        this.speedY = 0;
-        this.speedX = -1;
-        this.moving = true;
+        if (this.speedX === 0 && this.readyToTurn) {
+            this.speedY = 0;
+            this.speedX = -1;
+            this.moving = true;
+            this.readyToTurn = false;
+        }
     }
     turnRight() {
-        this.speedY = 0;
-        this.speedX = 1;
-        this.moving = true;
+        if (this.speedX === 0 && this.readyToTurn) {
+            this.speedY = 0;
+            this.speedX = 1;
+            this.moving = true;
+            this.readyToTurn = false;
+        }
     }
 }
 
 class ArrowKeyboard extends Player {
-    constructor(game, x, y, speedX, speedY, color) {
-        super(game, x, y, speedX, speedY, color);
+    constructor(game, x, y, speedX, speedY, color, name) {
+        super(game, x, y, speedX, speedY, color, name);
         window.addEventListener('keydown', e => {
             if (e.key === 'ArrowRight') this.turnRight();
             if (e.key === 'ArrowLeft') this.turnLeft();
@@ -81,8 +96,8 @@ class ArrowKeyboard extends Player {
     }
 }
 class WsadKeyboard extends Player {
-    constructor(game, x, y, speedX, speedY, color) {
-        super(game, x, y, speedX, speedY, color);
+    constructor(game, x, y, speedX, speedY, color, name) {
+        super(game, x, y, speedX, speedY, color, name);
         window.addEventListener('keydown', e => {
             if (e.key.toLowerCase() === 'd') this.turnRight();
             if (e.key.toLowerCase() === 'a') this.turnLeft();
@@ -92,8 +107,8 @@ class WsadKeyboard extends Player {
     }
 }
 class ComputerAi extends Player {
-    constructor(game, x, y, speedX, speedY, color) {
-        super(game, x, y, speedX, speedY, color);
+    constructor(game, x, y, speedX, speedY, color, name) {
+        super(game, x, y, speedX, speedY, color, name);
         this.turnTimer = 0;
         this.turnInterval = Math.floor(Math.random() * this.game.columns + 1);
     }

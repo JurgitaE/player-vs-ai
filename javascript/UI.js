@@ -1,13 +1,17 @@
 class UI {
     constructor(game) {
         this.game = game;
+        this.scoreBoard1 = document.getElementById('scoreBoard1');
+        this.scoreBoard2 = document.getElementById('scoreBoard2');
+        this.scoreBoard3 = document.getElementById('scoreBoard3');
+        this.scoreBoard4 = document.getElementById('scoreBoard4');
     }
 
-    drawStatusText() {
-        this.game.ctx.fillText('P1: ' + this.game.player1.score, this.game.cellSize, this.game.cellSize);
-        this.game.ctx.fillText('P2: ' + this.game.player2.score, this.game.cellSize, this.game.cellSize * 2);
-        this.game.ctx.fillText('P3: ' + this.game.player3.score, this.game.cellSize, this.game.cellSize * 3);
-        this.game.ctx.fillText('P4: ' + this.game.player4.score, this.game.cellSize, this.game.cellSize * 4);
+    update() {
+        this.scoreBoard1.innerText = `${this.game.player1.name}: ${this.game.player1.score}`;
+        this.scoreBoard2.innerText = `${this.game.player2.name}: ${this.game.player2.score}`;
+        this.scoreBoard3.innerText = `${this.game.player3.name}: ${this.game.player3.score}`;
+        this.scoreBoard4.innerText = `${this.game.player4.name}: ${this.game.player4.score}`;
     }
 }
 export default UI;
