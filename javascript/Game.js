@@ -1,5 +1,5 @@
 import InputHandler from './InputHandler.js';
-import { ArrowKeyboard, WsadKeyboard } from './Player.js';
+import { ArrowKeyboard, WsadKeyboard, ComputerAi } from './Player.js';
 
 class Game {
     constructor(canvas, context) {
@@ -13,12 +13,13 @@ class Game {
         this.rows;
 
         this.eventTimer = 0;
-        this.eventInterval = 400;
+        this.eventInterval = 200;
         this.eventUpdate = false;
 
         this.input = new InputHandler(this);
         this.player1;
         this.player2;
+        this.player3;
         this.playerObjects;
 
         this.resize(window.innerWidth, window.innerHeight);
@@ -35,7 +36,9 @@ class Game {
 
         this.player1 = new ArrowKeyboard(this, 0, 0, 1, 0, 'magenta');
         this.player2 = new WsadKeyboard(this, this.columns - 1, 0, 0, 1, 'orange');
-        this.playerObjects = [this.player1, this.player2];
+        this.player3 = new ComputerAi(this, this.columns - 1, this.rows - 1, -1, 0, 'blue');
+        this.player4 = new ComputerAi(this, 0, this.rows - 1, 0, -1, 'yellow');
+        this.playerObjects = [this.player1, this.player2, this.player3, this.player4];
 
         // this.render();
     }
