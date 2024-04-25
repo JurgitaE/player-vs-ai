@@ -10,11 +10,15 @@ class Player {
         this.height = this.game.cellSize;
         this.moving = true;
         this.score = 0;
+
+        this.length = 2;
+        this.segments = [];
     }
     update() {
         if (this.game.checkCollision(this, this.game.food)) {
-            this.score++;
             this.game.food.reset();
+            this.score++;
+            this.length++;
         }
         if (
             (this.x <= 0 && this.speedX < 0) ||
@@ -27,11 +31,21 @@ class Player {
         if (this.moving) {
             this.x += this.speedX;
             this.y += this.speedY;
+            this.segments.unshift({ x: this.x, y: this.y });
+            if (this.segments.length > this.length) this.segments.pop();
         }
     }
     draw() {
-        this.game.ctx.fillStyle = this.color;
-        this.game.ctx.fillRect(this.x * this.game.cellSize, this.y * this.game.cellSize, this.width, this.height);
+        this.segments.forEach((segment, i) => {
+            if (i === 0) this.game.ctx.fillStyle = 'black';
+            else this.game.ctx.fillStyle = this.color;
+            this.game.ctx.fillRect(
+                segment.x * this.game.cellSize,
+                segment.y * this.game.cellSize,
+                this.width,
+                this.height
+            );
+        });
     }
     turnUp() {
         this.speedY = -1;
