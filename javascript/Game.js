@@ -40,10 +40,10 @@ class Game {
         this.columns = Math.floor(this.width / this.cellSize);
         this.rows = Math.floor(this.height / this.cellSize);
 
-        this.player1 = new ArrowKeyboard(this, 0, 0, 1, 0, 'magenta');
-        this.player2 = new WsadKeyboard(this, this.columns - 1, 0, 0, 1, 'orange');
-        this.player3 = new ComputerAi(this, this.columns - 1, this.rows - 1, -1, 0, 'blue');
-        this.player4 = new ComputerAi(this, 0, this.rows - 1, 0, -1, 'yellow');
+        this.player1 = new ArrowKeyboard(this, 0, 0, 1, 0, 'magenta', 'Lol');
+        this.player2 = new WsadKeyboard(this, this.columns - 1, 0, 0, 1, 'orange', 'Yey');
+        this.player3 = new ComputerAi(this, this.columns - 1, this.rows - 1, -1, 0, 'blue', 'AI1');
+        this.player4 = new ComputerAi(this, 0, this.rows - 1, 0, -1, 'yellow', 'AI2');
         this.food = new Food(this);
         this.gameObjects = [this.player1, this.player2, this.player3, this.player4, this.food];
 
@@ -82,7 +82,7 @@ class Game {
                 object.draw();
                 object.update();
             });
-            this.ui.drawStatusText();
+            this.ui.update();
         }
     }
 }
