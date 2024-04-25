@@ -13,8 +13,10 @@ class Player {
 
         this.length = 2;
         this.segments = [];
+        this.readyToTurn = true;
     }
     update() {
+        this.readyToTurn = true;
         if (this.game.checkCollision(this, this.game.food)) {
             this.game.food.reset();
             this.score++;
@@ -48,24 +50,36 @@ class Player {
         });
     }
     turnUp() {
-        this.speedY = -1;
-        this.speedX = 0;
-        this.moving = true;
+        if (this.speedY === 0 && this.readyToTurn) {
+            this.speedY = -1;
+            this.speedX = 0;
+            this.moving = true;
+            this.readyToTurn = false;
+        }
     }
     turnDown() {
-        this.speedY = 1;
-        this.speedX = 0;
-        this.moving = true;
+        if (this.speedY === 0 && this.readyToTurn) {
+            this.speedY = 1;
+            this.speedX = 0;
+            this.moving = true;
+            this.readyToTurn = false;
+        }
     }
     turnLeft() {
-        this.speedY = 0;
-        this.speedX = -1;
-        this.moving = true;
+        if (this.speedX === 0 && this.readyToTurn) {
+            this.speedY = 0;
+            this.speedX = -1;
+            this.moving = true;
+            this.readyToTurn = false;
+        }
     }
     turnRight() {
-        this.speedY = 0;
-        this.speedX = 1;
-        this.moving = true;
+        if (this.speedX === 0 && this.readyToTurn) {
+            this.speedY = 0;
+            this.speedX = 1;
+            this.moving = true;
+            this.readyToTurn = false;
+        }
     }
 }
 
