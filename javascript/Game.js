@@ -19,21 +19,23 @@ class Game {
         this.eventUpdate = false;
 
         this.input = new InputHandler(this);
-        this.ui = new UI(this);
         this.player1;
         this.player2;
         this.player3;
         this.food;
         this.gameObjects;
+        this.ui = new UI(this);
 
         this.resize(window.innerWidth, window.innerHeight);
     }
 
     resize(width, height) {
         this.canvas.width = width - (width % this.cellSize);
-        this.canvas.height = height - height / this.cellSize;
+        this.canvas.height = height - (height % this.cellSize);
         this.width = this.canvas.width;
         this.height = this.canvas.height;
+        this.ctx.font = `${(this.cellSize / 5) * 3}px Impact`;
+        this.ctx.textBaseline = 'top';
 
         this.columns = Math.floor(this.width / this.cellSize);
         this.rows = Math.floor(this.height / this.cellSize);
@@ -76,10 +78,11 @@ class Game {
             this.ctx.clearRect(0, 0, this.width, this.height);
             this.drawGrid();
 
-            this.gameObjects.forEach(player => {
-                player.draw();
-                player.update();
+            this.gameObjects.forEach(object => {
+                object.draw();
+                object.update();
             });
+            this.ui.drawStatusText();
         }
     }
 }
