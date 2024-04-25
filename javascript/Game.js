@@ -1,5 +1,7 @@
+import { Food } from './Food.js';
 import InputHandler from './InputHandler.js';
 import { ArrowKeyboard, WsadKeyboard, ComputerAi } from './Player.js';
+import UI from './UI.js';
 
 class Game {
     constructor(canvas, context) {
@@ -17,10 +19,12 @@ class Game {
         this.eventUpdate = false;
 
         this.input = new InputHandler(this);
+        this.ui = new UI(this);
         this.player1;
         this.player2;
         this.player3;
-        this.playerObjects;
+        this.food;
+        this.gameObjects;
 
         this.resize(window.innerWidth, window.innerHeight);
     }
@@ -38,7 +42,8 @@ class Game {
         this.player2 = new WsadKeyboard(this, this.columns - 1, 0, 0, 1, 'orange');
         this.player3 = new ComputerAi(this, this.columns - 1, this.rows - 1, -1, 0, 'blue');
         this.player4 = new ComputerAi(this, 0, this.rows - 1, 0, -1, 'yellow');
-        this.playerObjects = [this.player1, this.player2, this.player3, this.player4];
+        this.food = new Food(this);
+        this.gameObjects = [this.player1, this.player2, this.player3, this.player4, this.food];
 
         // this.render();
     }
@@ -51,6 +56,10 @@ class Game {
         }
     }
 
+    checkCollision(a, b) {
+        return a.x === b.x && a.y === b.y;
+    }
+
     handlePeriodicEvents(deltaTime) {
         if (this.eventTimer < this.eventInterval) {
             this.eventTimer += deltaTime;
@@ -60,13 +69,14 @@ class Game {
             this.eventUpdate = true;
         }
     }
+
     render(deltaTime) {
         this.handlePeriodicEvents(deltaTime);
         if (this.eventUpdate) {
             this.ctx.clearRect(0, 0, this.width, this.height);
             this.drawGrid();
 
-            this.playerObjects.forEach(player => {
+            this.gameObjects.forEach(player => {
                 player.draw();
                 player.update();
             });
