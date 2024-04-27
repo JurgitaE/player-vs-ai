@@ -5,6 +5,9 @@ body * {
     box-sizing: border-box;
 }
 
+body {
+    background-color: black;
+}
 #canvas1 {
     background: url(assets/images/grass_night.png);
     position: absolute;
@@ -52,4 +55,8 @@ body * {
 .playerLabel {
     font-size: 20px;
     margin-top: 10px;
+}
+
+.assets {
+    display: none;
 }
